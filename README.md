@@ -1,4 +1,4 @@
-ArtisanalRandom is a seed based (not really) "random" number generator in vanilla javascript. Given a done seed (up to 30 letters word) it will always make the same (infinite) serie of rolls.
+ArtisanalRandom is a seed based (not really) "random" number generator in vanilla javascript. Given a done seed (up to 30 letters word) it will always produce the same (infinite) serie of rolls.
 My goal here is to developp an artisanal one, not using hashes nor any other crypto function, but as efficient as those doing so when it comes to generate a large number of unpredictible by human mind rolls from a seed. 
 Which means as little possible statistical anomalies like abnormal amount of repetitions of one roll compared to the average, or of serie of successive similar rolls numbers.
 This project use test driven developpment, I'm making the tests first (tests will make 100000 rolls of 1000 sided dice and analyse result repartition), then will compare the results of my method to standard Math.random() results and other random generation methods.

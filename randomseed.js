@@ -83,13 +83,17 @@ RandomSeed.prototype.roll = function (de, tirageNo) {
     tirageNo += this.premierTirage ;
 	
    let noDe1, noDe2, noDe3, de1, de2, de3, step, result,tiragestring ;
+  step = nextS(Math.ceil(tirageNo/119));
+  
+  let t = tirageNo+step;
 
-   step = nextS(Math.ceil(tirageNo/119));
-   let t = tirageNo;
+  if (tirageNo%2) {
+    t+=step;
+  }
 
-   noDe1 = nextS (t);
-   noDe2 = nextS (t+step);
-   noDe3 = nextS (t+2*step);
+   noDe1 = nextS ((t/43)*11);
+   noDe2 = nextS ((t/47)*17);
+   noDe3 = nextS ((t/59)*23);
    
    if (tirageNo%3) {
      de1 = this.seed [noDe2];
@@ -111,15 +115,15 @@ RandomSeed.prototype.roll = function (de, tirageNo) {
 	   de2 = this.seed [noDe3];
    }
 
-   if (t%3) {
-    de1=9-de1;
-   }
-   if (t%4) {
-    de2=9-de2;
-   }
-   if (t%5) {
-    de3=9-de3;
-   }
+  //  if (t%3) {
+  //   de1=9-de1;
+  //  }
+  //  if (t%4) {
+  //   de2=9-de2;
+  //  }
+  //  if (t%5) {
+  //   de3=9-de3;
+  //  }
 
    //console.log ("de1 "+de1);
    tiragestring = ""+de1+de2+de3;

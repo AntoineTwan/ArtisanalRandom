@@ -64,11 +64,35 @@ export const RandomSeed = function (seed) {
 	}
   else {
    this.seed = seed;
+   console.log (seed);
    } 
  let tt = "100" + this.seed [this.seed[11]] + this.seed [5]+ this.seed[7] +this.seed[this.seed[14]];
   this.premierTirage = parseInt (tt);  
  // alert ("PremierTirage :"+tt);  
 }  
+
+RandomSeed.prototype.roll2 = function (de,tirageNo) {
+  if (tirageNo==undefined) {
+    tirageNo=tirage; 
+    ++ tirage ; 
+    }
+  let tir = tirageNo+this.premierTirage;
+  let tirageNoString = ""+tir;
+  let tirUnit = tirageNoString.slice (tirageNoString.length-1);
+  let chiffres = new Array (tirageNoString.length-1);
+  for (let i=1;i<tirageNoString.length;++i) {
+    chiffres[i]=tirageNoString.charAt[i];
+  }
+
+
+
+
+    function nextS (v,limit) {
+      v=Math.floor(v);
+		   if (v>-1 && v<limit) return v;
+       else return v- (Math.floor(v/limit)*limit);
+   }
+}
   	
   
 RandomSeed.prototype.roll = function (de, tirageNo) {
@@ -83,15 +107,34 @@ RandomSeed.prototype.roll = function (de, tirageNo) {
     tirageNo += this.premierTirage ;
 	
    let noDe1, noDe2, noDe3, de1, de2, de3, step, result,tiragestring ;
-  step = nextS(Math.ceil(tirageNo/119));
+  step = nextS(Math.ceil((tirageNo/119)*7));
   
   let t = tirageNo+step;
 
-  if (tirageNo%2) {
+  if (tirageNo%6) {
+    t-=57;
+  }
+  else if (tirageNo%2) {
     t+=step;
   }
+  else if (tirageNo%3) {
+    t-=(step+1);
+  }
 
-   noDe1 = nextS ((t/43)*11);
+if (t%35) {
+  t+=13;
+}
+else if  (t%5) {
+    t+=Math.ceil(step/2);
+  }
+else if (t%7) {
+    t-=Math.ceil(step/2);
+  }
+else if (t%15) {
+    t+=3;
+}  
+
+   noDe1 = nextS ((t*Math.PI)/4);
    noDe2 = nextS ((t/47)*17);
    noDe3 = nextS ((t/59)*23);
    
@@ -148,14 +191,12 @@ RandomSeed.prototype.roll = function (de, tirageNo) {
    return parseInt(result);
   
    function nextS (v) {
-      v=Math.floor(v);
+      v=Math.round(v);
 		   if (v>-1 && v<30) return v;
        else return v- (Math.floor(v/30)*30);
    }
-
-   
-}
-
+  }
+  
 function testSeed () {
   s = new RandomSeed () ;
   var txt = "Randomseed :"+ display (s.seed) + "Premier tirage "+ s.premierTirage ;
@@ -165,9 +206,58 @@ function testSeed () {
   document.write (txt);
 }  
 
-function convertNumber(number) {
-
+export const WordToSeed = function (word) {
+  let seed = new Array (30).fill(-1);
+  if (!word.length) {
+    word="326agbbggukktsxcrk";
+  }
+  while (word.length<30) {
+    word=word+word;
+    //console.log ("word :"+word);
+  }
+  let charNo, rebasedNo, direction;
+  let chiffre=-1;
+  for (let i=0;i<30;++i) {
+    chiffre++;
+    if (chiffre>9) {
+      chiffre=0;
+    }
+    charNo=word.charCodeAt(i);
+    //console.log ("caracNo "+charNo);
+    rebasedNo = rebaseNumber(charNo, 30);
+    //console.log ("rebased :"+rebasedNo);
+    if ((i+charNo)%2) {
+      direction =1;
+    }
+    else {
+      direction=-1;
+    }
+    while (seed[rebasedNo]!=-1) {
+      rebasedNo+=direction;
+      if (rebasedNo+direction>-1 && rebasedNo+direction<29 && seed.includes(-1)) {
+        if (seed[rebasedNo+direction]==chiffre || seed[rebasedNo-direction]==chiffre) {
+            rebasedNo+=direction;
+        }
+      }
+      if (rebasedNo>29) {
+        rebasedNo=0;
+      }
+      if (rebasedNo<0) {
+        rebasedNo=29;
+      } 
+    }
+    seed[rebasedNo]=chiffre; 
+    console.log ("Placé "+ chiffre+ " position "+rebasedNo);
+  }
+  return seed;
 }
+
+
+function rebaseNumber(number, limit) {
+     if (number>-1 && number<limit) return number;
+     else return number- (Math.floor(number/limit)*limit);
+ }
+
 
 	   
    

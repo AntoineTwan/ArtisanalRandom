@@ -1,6 +1,8 @@
-import {RandomSeed} from "./randomseed.js"
+import {RandomSeed,WordToSeed} from "./randomseed.js"
 
-var s=new RandomSeed()
+
+var w=new WordToSeed('Almanach');
+var s=new RandomSeed(w);
 
 const normalRoll1000 = function () {
   return Math.floor(Math.random()*1000);

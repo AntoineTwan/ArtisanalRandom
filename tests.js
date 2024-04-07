@@ -1,20 +1,29 @@
 import {RandomSeed,WordToSeed} from "./randomseed.js"
 
 
-var w=new WordToSeed('Almanach');
+var w=WordToSeed("github");
 var s=new RandomSeed(w);
 
-const normalRoll1000 = function () {
+// la fonction témoin et les différentes fonctions à tester
+// toutes correspondent à des tirages de 0 à 999
+const normalRoll = function () {
   return Math.floor(Math.random()*1000);
 }
-
-
-const rseedRoll1000 = function () {
-  return s.roll (1000)-1;
+const rseedRoll0 = function () {
+  return s.roll0 (1000)-1;
+}
+const rseedRoll1 = function () {
+  return s.roll1 (1000)-1;
+}
+const rseedRoll2 = function () {
+  return s.roll2 ()-1;
 }
 
-const testGeneratedNumbers = function (rollno) {
-  const roll1000=rseedRoll1000;
+
+//la fonction qui effectuera les tests
+//elle prend en paramètre le nombre de tirages à effectuer (rollsNumber)
+const testGeneratedNumbers = function (rollsNumber) {
+  const roll1000=rseedRoll2;   // la fonction testée est renseignée là
   let rolls = [];
   let repeats = new Array (1000).fill(0);
   for (let i=0;i<rollno;++i) {
@@ -26,7 +35,7 @@ const testGeneratedNumbers = function (rollno) {
     repeats[roll]=++repeats[roll];
   }
   
-  //test 1 et 2 : Nombre max et min de répétitions d'un nombre 
+  //tests 1 et 2 : Nombre max et min de répétitions d'un nombre 
   let maxRepeats = 0;
   let minRepeats = 1000000;
   let maxRepeated = -1;
@@ -87,17 +96,12 @@ const testGeneratedNumbers = function (rollno) {
       }    
     }
     for (let i=0;i<10;++i) {
-      //       //  if (numberOfSeriesFound[i]==0) {break;}
       console.log ("Au total "+numberOfSeriesFound[i]+" répétitions de séries de "+(i+2)+" nombres trouvées.");
     }
-    // for (let i=0;i<seriesFound.length;++i) {
-    //   console.log ("Série trouvée :"+seriesFound[i]);
-    // }
     console.log (rolls);
   }
   
   
-  
-  
-  
+  // lancement de la fonction avec le paramètre 100000
+  // j'utilise l'extension Runcode pour l'activer d'un clic droit dans vscode
   testGeneratedNumbers(100000)

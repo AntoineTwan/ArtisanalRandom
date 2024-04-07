@@ -8,7 +8,7 @@ Finally after several attempts I ended with a version giving an as low number of
 
 That best method is the roll2 one (roll0 and roll1 have just been kept as examples of less efficient ones, as I'm going to use this mini project for a blog post on test driven developpment).
 
-Technically it uses a seed table of numbers from 0 to 9 (3 of each) put in an order determined by the word, and when it makes "rolls" use obscure mathematics formulas (don't ask me to explain why/how they work) to convert the roll number into the adresses of 3 of these 10 sided dices in the table, then assembles the result and converts it to an integer.
+Technically it uses a seed table of numbers from 0 to 9 (3 of each) put in an order determined by the word, and when it makes "rolls" use obscure mathematics formulas (don't ask me to explain why/how they work) to convert the roll number into the adresses of 3 of these 10 sided dices in the table, then assembles the result as a string and converts it back to an integer.
 
 For example the word 'github' entered as parameter of WordToSeed generates a seedtable of 
 [  2, 4, 7, 8, 9, 6, 5, 3, 5,

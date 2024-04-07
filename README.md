@@ -23,8 +23,8 @@ Rollnumber being an attribute of the RandomSeed object, incremented after each r
 
 how to use : 
  - import RandomSeed and WordToSeed from randomseed.js
- - if you want to use a word as seed, call WordToSeed giving it an up to 30 letters seed word as parameter (it's also possible to use RandomSeed directly without paramater, in which case it will generate a seed table itself using Math.random() to randomly place the numbers) 
- - create a new RandomSeed with the return of WordToSeed (put it in a global variable to continue using the same seed)
+ - if you want to use a word as seed, call WordToSeed giving it an up to 30 letters seed word as parameter and create a new RandomSeed with the return of WordToSeed as parameter (store it in a global variable to continue using the same seed)
+ - it's also possible to create the Randomseed with no paramater in which case it will generate a seedtable itself (using Math.random() to place the numbers randomly)
  - then use that RandomSeed .roll2 method (optionnal parameters : dice, roll number) to generate numbers in the 1 to dice* range (by default will generate numbers from 1 to 1000)
  - given the same seed, dice and roll number the method will always give the same result
 

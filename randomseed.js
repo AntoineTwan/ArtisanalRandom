@@ -66,22 +66,21 @@ RandomSeed.prototype.roll0 = function (dice, rollNo) {
     }   
   let noDe1, noDe2, noDe3, de1, de2, de3, step, result,rollstring ;
   rollNo += this.addToRollNo ;  // une constante générée à partir de la seed qui s'ajoute au numéro de tirage
-  step = rebaseNumber(Math.ceil(rollNo+1)/30); 
+  step = rebaseNumber(Math.floor(rollNo+1)/30); 
   noDe1 = rebaseNumber(rollNo+Math.floor(rollNo/9000));
   noDe2 = rebaseNumber(rollNo+step);
   noDe3 = rebaseNumber(rollNo+2*step);
-  if (rollNo%3) {
-    de1 = this.seed [noDe2];
-    de2 = this.seed [noDe1];
-  }
-  else {
-    de1 = this.seed [noDe1];
-    de2 = this.seed [noDe2];	   
-  }
-  if (rollNo%2) {
-  de3 = this.seed [noDe1];
-  de1 = this.seed [noDe3];
-  }
+  de1=this.seed[noDe1];
+  de2=this.seed[noDe2];
+  de3=this.seed[noDe3];
+   if (rollNo%3) {
+     de1 = this.seed [noDe2];
+     de2 = this.seed [noDe1];
+   }
+   else if (rollNo%2) {
+     de3 = this.seed [noDe1];
+     de1 = this.seed [noDe3];
+   }
   rollstring = ""+de1+de2+de3;
   result = parseInt (rollstring);
   if (dice==undefined) {

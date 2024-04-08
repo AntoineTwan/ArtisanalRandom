@@ -97,15 +97,15 @@ const testGeneratedNumbers = function (rollsNumber) {
                 seriesFound.push (serieFound);
                 numberOfSeriesFound[l-2]++;
                 ignoreSerie[k]=true;
-                //console.log ("Trouvé répétition de "+(l)+" nombres.");
               }
             }
           }
         }
       }    
     }
-    for (let i=0;i<10;++i) {
+    for (let i=0;i<9;++i) {
       console.log ("Au total "+numberOfSeriesFound[i]+" répétitions de séries de "+(i+2)+" nombres trouvées.");
+      if (numberOfSeriesFound[i]==0) {break;}
     }
     console.log (rolls);
   }
@@ -136,5 +136,6 @@ const testGeneratedNumbers = function (rollsNumber) {
   // j'utilise l'extension Runcode pour l'activer d'un clic droit dans vscode
   testGeneratedNumbers(100000)
   
+
   // lancement du test de vitesse avec 1000000 (à effectuer séparément)
   //testSpeed(10000000)

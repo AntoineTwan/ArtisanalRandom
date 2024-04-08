@@ -67,7 +67,7 @@ RandomSeed.prototype.roll0 = function (dice, rollNo) {
   let noDe1, noDe2, noDe3, de1, de2, de3, step, result,rollstring ;
   rollNo += this.addToRollNo ;  // une constante générée à partir de la seed qui s'ajoute au numéro de tirage
   step = rebaseNumber(Math.floor(rollNo+1)/30); 
-  noDe1 = rebaseNumber(rollNo+Math.floor(rollNo/9000));
+  noDe1 = rebaseNumber(rollNo+Math.floor(rollNo/900));
   noDe2 = rebaseNumber(rollNo+step);
   noDe3 = rebaseNumber(rollNo+2*step);
   de1=this.seed[noDe1];

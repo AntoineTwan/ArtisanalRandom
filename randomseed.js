@@ -37,7 +37,7 @@ export const RandomSeed = function (seed, rollNo, addToRollNo) {
     seed = seedtable ;	
 	}
   this.seed = seed;
-  console.log (seed); // console.log pour vérifier que la seedtable est bien renseignée
+  //console.log (seed); // à décommenter pour vérifier que la seedtable est bien renseignée
 
   // si le rollNo n'est pas renseigné on l'initialise à 0
   if (rollNo==undefined) {
@@ -283,10 +283,8 @@ export const WordToSeed = function (word) {
       }
       seed[rebasedNo]=chiffre; 
     }
-    console.log(seed);
     return seed;
   }
-  console.log("pas de mot");
 }
 
 

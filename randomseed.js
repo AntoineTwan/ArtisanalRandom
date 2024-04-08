@@ -111,7 +111,7 @@ RandomSeed.prototype.roll0 = function (dice, rollNo) {
 RandomSeed.prototype.roll1 = function (dice, rollNo) {
   if (rollNo==undefined) {
     rollNo=this.rollNo; 
-    ++ rollNo ; 
+    this.rollNo++ ; 
     }	   
  
    rollNo += this.addToRollNo ;

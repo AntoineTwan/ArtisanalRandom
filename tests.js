@@ -1,7 +1,7 @@
 import {RandomSeed,WordToSeed} from "./randomseed.js"
 
 
-const w=WordToSeed("github");
+const w=WordToSeed("githubtesttest");
 const s=new RandomSeed(w);
 const a = new Uint16Array(1);
 
@@ -116,7 +116,7 @@ const testGeneratedNumbers = function (rollsNumber) {
   // pour tester normalRoll sans l'initialisation destinée aux autres il faut comment out les constantes w, s et a 
   // pour cryptoroll w et s ; pour les autres a (ça fait en fait très peu de différence par rapport au tirage de 100000 nombres)
   const testSpeed = function (rollsNumber) {
-    const roll1000=rseedRoll2; 
+    const roll1000=rseedRoll1; 
     for (let i=0;i<rollsNumber;++i) {
       roll1000();
     }
@@ -125,12 +125,12 @@ const testGeneratedNumbers = function (rollsNumber) {
   // normalRoll 0.135 seconds
   // cryptoRoll 2.7 seconds
   // roll0 0.267 seconds
-  // roll1 0.288 seconds
+  // roll1 0.31 seconds
   // roll2 1.4 seconds 
   // des artisanales,  roll1 est la solution la plus satisfaisante pour une combinaison vitesse / relativement faible nombre de répétitions
   // roll2 sacrifie pas mal de vitesse pour réduire d'avantage les anomalies mais demeure nettement plus rapide que la solution crypto
   // la solution crypto prend un temps exponentiellement plus long si on augmente le nombre de tirages (par exemple 24 secondes pour 10 millions)
-  // quand normalroll est à peine affecté (0.2s) et roll1 entre les deux (1,7 secondes)
+  // quand normalroll est à peine affecté (0.2s) et roll1 entre les deux (2,1 secondes)
   
   // lancement du test de répartition avec le paramètre 100000
   // j'utilise l'extension Runcode pour l'activer d'un clic droit dans vscode

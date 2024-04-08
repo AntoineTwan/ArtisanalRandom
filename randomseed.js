@@ -140,9 +140,18 @@ else if  (t%5) {
 else if (t%7) {
    t-=Math.ceil(step/2);
  }
+else if (t%11) {
+  t+=3;
+}
+else if (t%13) {
+  t+=11;
+}
 else if (t%15) {
-   t+=3;
+   t-=3;
 }  
+else if (t%3) {
+  t+=2;
+}
 
   noDe1 = rebaseNumber ((t*Math.PI)/4);
   noDe2 = rebaseNumber ((t/47)*17);
@@ -163,17 +172,21 @@ else if (t%15) {
     de3=de1;
     de1 = this.seed [noDe3];
   }
-  else if (rollNo%7) {
+  else if (t%5) {
     de3=de2;
     de2 = this.seed [noDe3];
   }
+
+
+
+
   rollNostring = ""+de1+de2+de3;
   
-   if (!rollNo%2) {
-     result = parseInt (rollNostring);
+   if (rollNo%4) {
+     result = 999- parseInt (rollNostring);
    }
    else {
-     result = 999 - parseInt (rollNostring);
+     result = parseInt (rollNostring);
    }
   
    if (dice==undefined) {

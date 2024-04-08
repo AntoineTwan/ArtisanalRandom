@@ -64,17 +64,12 @@ RandomSeed.prototype.roll0 = function (dice, rollNo) {
     rollNo=this.rollNo; 
     this.rollNo++ ; 
     }   
-
   let noDe1, noDe2, noDe3, de1, de2, de3, step, result,rollstring ;
-
-  step = Math.ceil(rollNo/30+rollNo/this.addToRollNo);
-
-  rollNo += this.addToRollNo ;
-
-  noDe1 = rebaseNumber(rollNo);
+  rollNo += this.addToRollNo ;  // une constante générée à partir de la seed qui s'ajoute au numéro de tirage
+  step = rebaseNumber(Math.ceil(rollNo+1)/30); 
+  noDe1 = rebaseNumber(rollNo+Math.floor(rollNo/9000));
   noDe2 = rebaseNumber(rollNo+step);
   noDe3 = rebaseNumber(rollNo+2*step);
-
   if (rollNo%3) {
     de1 = this.seed [noDe2];
     de2 = this.seed [noDe1];
@@ -87,22 +82,12 @@ RandomSeed.prototype.roll0 = function (dice, rollNo) {
   de3 = this.seed [noDe1];
   de1 = this.seed [noDe3];
   }
-
   rollstring = ""+de1+de2+de3;
-
   result = parseInt (rollstring);
-
-  if (isNaN(result)) {
-    console.log ("rollNo "+ rollNo+ " noDe1 "+noDe1+ " de1 "+de1+ " rollstring "+ rollstring);
-    throw new Error();
-  }
-
   if (dice==undefined) {
     dice=1000;
   }
-
   result = Math.floor((result*dice)/1000) +1;  	   
-
   return parseInt(result);
 }
 

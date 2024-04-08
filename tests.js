@@ -32,7 +32,7 @@ const rseedRoll2 = function () {
 //la fonction qui effectuera les tests de répartition des tirages
 //elle prend en paramètre le nombre de tirages à effectuer (rollsNumber)
 const testGeneratedNumbers = function (rollsNumber) {
-  const roll1000=rseedRoll1;   // la fonction testée est renseignée là
+  const roll1000=rseedRoll2;   // la fonction testée est renseignée là
   let rolls = [];
   let repeats = new Array (1000).fill(0);
   for (let i=0;i<rollsNumber;++i) {

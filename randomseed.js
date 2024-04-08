@@ -1,7 +1,7 @@
 ﻿
 // fonction essentielle à toutes les autres qui va ramener tout nombre (numéros de caractères ou issus des calculs) 
 // en un entier de 0 à 29 correspondant aux indexs la seedtable
-// (ou autre puisque je lui permet de paramétrer cette limite)
+// (ou autre en paramétrant cette limite)
 function rebaseNumber(number, limit) {
   if (!limit) {
     limit=30 ;}

@@ -1,7 +1,7 @@
   import {RandomSeed,WordToSeed} from "./randomseed.js"
 
 
-  const w=WordToSeed("github"); // remplacer par tout autre mot de 30 caractères ou moins
+  const w=WordToSeed("ipushedmyCodeong3thub"); // remplacer par tout autre mot de 30 caractères ou moins
   const s=new RandomSeed(w);
   const a = new Uint16Array(1);
 
@@ -27,14 +27,23 @@
   const rseedRoll2 = function () {
     return s.roll2 ()-1;
   }
+  const rseedRoll3 = function () {
+    return s.roll3 ()-1;
+  }
 
 
   //la fonction qui effectuera les tests de répartition des tirages
   //elle prend en paramètre le nombre de tirages à effectuer (rollsNumber)
   const testGeneratedNumbers = function (rollsNumber) {
-    const roll1000=rseedRoll2;   // la fonction testée est renseignée là
+    const roll1000=rseedRoll3;   // la fonction testée est renseignée là
     let rolls = [];
     let repeats = new Array (1000).fill(0);
+    let testRoll, mostFirst;
+    let prevFirst = -1;
+    let totalSameCent =0;
+    let maxSameCent =0;
+    let numIncluded=new Array(10).fill(0);
+    let numFirst=new Array(10).fill(0);
     for (let i=0;i<rollsNumber;++i) {
       let roll = roll1000();
       if (roll==undefined) {
@@ -42,6 +51,32 @@
       }
       rolls.push(roll);
       repeats[roll]=++repeats[roll];
+      testRoll=roll.toString();
+      
+      if (prevFirst==testRoll[0]) {
+        totalSameCent++;
+        if (totalSameCent>maxSameCent) {
+          maxSameCent=totalSameCent;
+          mostFirst=testRoll[0];
+        }
+      }
+      else {
+        prevFirst=testRoll[0];
+        totalSameCent=1;
+      }  
+      
+      for (let j=0;j<10;j++) {
+        if (j==0 && roll<100) {
+          numIncluded[j]++;
+          numFirst[j]++;
+        }
+        if (testRoll.includes(j)) {
+          numIncluded[j]++;
+        }
+        if (testRoll[0]==j) {
+          numFirst[j]++;
+        }
+      }
     }
     
     //tests 1 et 2 : Nombre max et min de répétitions d'un nombre 
@@ -67,8 +102,6 @@
     let numberOfSeriesFound = [0,0,0,0,0,0,0,0,0,0];
     let seriesFound = [];
     let reducedRolls, startIndex, serieToTest, seriesToTest, ignoreSerie;
-    
-    
     
     for (let i=0;i<1000;++i) { //Teste les séries commençant par i
       reducedRolls= rolls;
@@ -107,7 +140,14 @@
         console.log ("Au total "+numberOfSeriesFound[i]+" répétitions de séries de "+(i+2)+" nombres trouvées.");
         if (numberOfSeriesFound[i]==0) {break;}
       }
-      console.log (rolls);
+
+      //test4 : Répartitions chiffres
+      for (let i=0;i<10;++i) {
+        console.log ("Nombre de tirages contenant au moins un "+i+" = "+numIncluded[i]);
+        console.log ("Dont "+numFirst[i]+" en première position.");
+      }
+      //test 5 : série de même centaine
+        console.log ("Un nombre de "+maxSameCent+" tirages à la suite ont commencé par "+mostFirst+".");
     }
 
     // test séparé de la vitesse pure d'exécution
@@ -115,18 +155,21 @@
     // (si on utilise comme moi l'extension runcode de vscode 'excited with code 0 in ...' seconds)
     // pour tester normalRoll sans l'initialisation destinée aux autres il faut comment out les constantes w, s et a 
     // pour cryptoroll w et s ; pour les autres a (ça fait en fait très peu de différence par rapport au tirage de 100000 nombres)
+    
     const testSpeed = function (rollsNumber) {
-      const roll1000=rseedRoll1; 
+      const roll1000=rseedRoll3; 
       for (let i=0;i<rollsNumber;++i) {
         roll1000();
       }
     }
+
     // ** résultats pour 1,000,000 de tirages **
     // normalRoll 0.135 seconds
     // cryptoRoll 2.7 seconds
     // roll0 0.267 seconds
     // roll1 0.31 seconds
-    // roll2 1.4 seconds 
+    // roll2 1.4 seconds
+    // roll3 1.7 seconds
     // des artisanales,  roll1 est la solution la plus satisfaisante pour une combinaison vitesse / relativement faible nombre de répétitions
     // roll2 sacrifie pas mal de vitesse pour réduire d'avantage les anomalies mais demeure nettement plus rapide que la solution crypto
     // la solution crypto prend un temps exponentiellement plus long si on augmente le nombre de tirages (par exemple 24 secondes pour 10 millions)
@@ -138,4 +181,4 @@
     
 
     // lancement du test de vitesse avec 1000000 (à effectuer séparément)
-    //testSpeed(10000000)
+    //testSpeed(1000000)

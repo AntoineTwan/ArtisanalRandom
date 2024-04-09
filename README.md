@@ -1,4 +1,4 @@
-ArtisanalRandom is a seed based (not really) "random" number generator in vanilla javascript. Given a done seed (an up to 30 letters word) it will always produce the same (infinite) serie of "rolls".
+ArtisanalRandom is a seed based (not really) "random" number generator (PRNG) in vanilla javascript. Given a done seed (an up to 30 letters word) it will always produce the same (infinite) serie of "rolls".
 
 My goal here was to developp an artisanal one, not using hashes nor any other already made crypto function, but as close as I can of those doing so when it comes to generating a large number of unpredictible by human mind numbers from a seed with as little sequence repetitions possible. 
 

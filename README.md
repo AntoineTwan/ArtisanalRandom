@@ -6,7 +6,9 @@ This project used test driven developpment, I've used a test making 100000 rolls
 
 Finally after several attempts I ended with a version giving an as low number of repetitions as the default random function for 100,000 rolls (if likely a bit worse for millions).
 
-That best method is the roll2 one (roll0 and roll1 have just been kept as examples of less efficient ones, as I'm going to use this mini project for a blog post on test driven developpment).
+That best method are the roll2 and roll3 ones (roll0 has just been kept as example of a non efficient one, as I'm going to use this mini project for a blog post on test driven developpment, roll1 is decent for its speed but produce more repetitions of series than math.Random(), roll2 is as efficient up to 200,000 rolls, roll3 is as or more efficient up to 500,000+ but not really needed if you don't plan to make that many rolls).
+
+(time per roll calculated after making a million : 310k ns for roll1, 1410k ns for roll2, 1670k ns for roll3, all are slower than Math.random() (135k) but faster than Cryto.getRandomValues() - 2710k)
 
 Technically it uses a seed table of numbers from 0 to 9 (3 of each) put in an order determined by the word, and when it makes "rolls" use obscure mathematics formulas (don't ask me to explain why/how they work) to convert the roll number into the adresses of 3 of these 10 sided dices in the table, then assembles the result as a string and converts it back to an integer.
 
@@ -25,7 +27,7 @@ how to use :
  - import RandomSeed and WordToSeed from randomseed.js
  - if you want to use a word as seed, call WordToSeed giving it an up to 30 letters seed word as parameter and create a new RandomSeed with the return of WordToSeed as parameter (store it in a global variable to continue using the same seed)
  - it's also possible to create the Randomseed with no paramater in which case it will generate a random seedtable itself 
- - then use the .roll2 method (optionnal parameters : dice, roll number) to generate numbers in the 1 to dice* range (by default will generate numbers from 1 to 1000)
+ - then use the .roll2 or .roll3 methods (optionnal parameters : dice, roll number) to generate numbers in the 1 to dice* range (by default will generate numbers from 1 to 1000)
  - given the same seed, dice and roll number the method will always give the same result
  - if no roll number is given as parameter to the roll2 method, it uses the rollNumber attribute of the RandomSeed object, and increments it
 

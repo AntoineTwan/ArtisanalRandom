@@ -227,6 +227,78 @@
     result = Math.floor((result*dice)/1000) +1;  	   
   return parseInt(result);
   }
+
+  RandomSeed.prototype.roll3 = function (dice, rollNo) {
+    if (rollNo==undefined) {
+      rollNo=this.rollNo; 
+      ++ this.rollNo ; 
+      }
+  else {
+        rollNo = parseInt (rollNo);
+  }	   
+  
+    rollNo += this.addToRollNo ;
+
+    let div1 = 0.137 + rebaseNumber (rollNo,5);
+    let div2 = 600 + rebaseNumber (rollNo,34);
+    let div3 = 1850 + rebaseNumber (rollNo,73);
+
+    // à partir du numéro de tirage on génère 3 valeurs
+    // peu importe la méthode exacte, le tout est ce qu'elles aient beaucoup de chiffres après la virgule
+    // des multiplications par des fractions nombre premier / nombre premier supérieur ou utilisant des constantes comme Math.PI marchent très bien pour ça 
+    let v1= ((Math.PI/div1)*rollNo);
+    let v2= (rollNo*(241/div2));
+    let v3= (rollNo*(827/div3));
+
+    // on garde de ces valeurs les 5 derniers chiffres en éliminant le tout dernier
+    // les tests ayant montré que l'inclure crée des déséquilibres (tirages qui reviennent plus que d'autres) 
+    let strv1 = v1.toString().slice(-5,-1).replace('.','');
+    let strv2 = v2.toString().slice(-5,-1).replace('.','');
+    let strv3 = v3.toString().slice(-5,-1).replace('.','');
+
+    v1= parseInt(strv1);
+    v2= parseInt (strv2);
+    v3= parseInt(strv3);
+
+    if (isNaN(v1) || isNaN(v2) || isNaN(v3) ) {
+      console.log (" strv1 "+strv1+ " strv2 "+strv2+" strv3 "+strv3);
+    }
+
+    // pour ajouter à l'irrégularité des séries on échange les valeurs si le numéro de tirage est pair ou un multiple 3  
+    let temp;
+    if (rollNo%2) {
+      temp = v1;
+      v1=v2;
+      v2=v3;
+      v3=temp;
+    }
+    else if (rollNo%3) {
+      temp = v2;
+      v2=v1;
+      v1=v3;
+      v3=temp;
+    }
+
+    // enfin on utilise rebaseNumber pour aboutir à des numéros de dés de 0 à 29 
+    let noDe1 = rebaseNumber (v1);
+    let noDe2 = rebaseNumber (v2);
+    let noDe3 = rebaseNumber (v3);
+
+    let rollNoStr = ""+this.seed[noDe1]+this.seed[noDe2]+this.seed[noDe3];
+    let result=parseInt(rollNoStr);
+
+    //et pour limiter encore les répétions de séries on inverse les résultats 1 fois sur 4
+    if (rollNo%4) {
+      result = 999 - result;
+    }
+
+    if (dice==undefined) {
+      dice=1000;
+    }
+
+    result = Math.floor((result*dice)/1000) +1;  	   
+  return parseInt(result);
+  }
     
 
   // la fonction générant la seedtable à partir d'un mot (qui peut être toute autre combinaison de caractères ASCII)

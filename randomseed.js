@@ -1,13 +1,34 @@
 ﻿
-  // fonction essentielle à toutes les autres qui va ramener tout nombre (numéros de caractères ou issus des calculs) 
+
+ // fonction essentielle à toutes les autres qui va ramener tout nombre (numéros de caractères ou issus des calculs) 
   // en un entier de 0 à 29 correspondant aux indexs la seedtable
   // (ou autre en paramétrant cette limite)
   function rebaseNumber(number, limit) {
-    if (!limit) {
-      limit=30 ;}
+    if (!limit)  limit=30 ;
     number=Math.round (number);
     if (number>-1 && number<limit) return number;
-    else return number- (Math.floor(number/limit)*limit);
+    if (number >-1) return number-(Math.floor(number/limit)*limit);
+    return rebaseNumber(number*-1); // juste au cas où on décide d'utiliser des formules pouvant aboutir à des valeurs négatives
+  }
+
+// génère aléatoirement une seed
+  function genSeed () {
+    let seedtable = new Array (30).fill(-1); 
+    let place, value;                            
+      for (var i=0; i<30;++i) {
+        value=parseInt (i.toString().slice(-1));
+        place = Math.floor(Math.random()*10)+value;
+        while (seedtable[place]>-1) {
+          if (place<29) {
+            ++place;
+          }
+          else {
+            place = 0;
+          }
+      }
+        seedtable [place] = value ;
+      }
+      return seedtable;
   }
 
   //le constructeur de l'objet RandomSeed
@@ -16,22 +37,7 @@
   export const RandomSeed = function (seed, rollNo, addToRollNo) {
     if (seed==undefined) {
       // génère aléatoirement la seedtable si aucune n'est fournie
-      let seedtable = new Array (30).fill(-1); 
-      let place, value;                            
-        for (var i=0; i<30;++i) {
-          value=parseInt (i.toString().slice(-1));
-          place = Math.floor(Math.random()*10)+value;
-          while (seedtable[place]>-1) {
-            if (place<29) {
-              ++place;
-            }
-            else {
-              place = 0;
-            }
-        }
-          seedtable [place] = value ;
-        }
-      seed = seedtable ;	
+      seed = genSeed() ;	
     }
     this.seed = seed;
 
@@ -291,14 +297,12 @@
     if (rollNo%4) {
       result = 999 - result;
     }
-
-    if (dice==undefined) {
-      dice=1000;
-    }
-
-    result = Math.floor((result*dice)/1000) +1;  	   
-  return parseInt(result);
-  }
+    if (dice) {
+          result = Math.floor((result*dice)/1000)
+    }     
+    return result+1;
+ }
+      
     
 
   // la fonction générant la seedtable à partir d'un mot (qui peut être toute autre combinaison de caractères ASCII)

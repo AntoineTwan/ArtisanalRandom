@@ -1,8 +1,8 @@
   import {RandomSeed,WordToSeed} from "./randomseed.js"
 
 
-  const w=WordToSeed("ipushedmyCodeong3thub"); // remplacer par tout autre mot de 30 caractères ou moins
-  const s=new RandomSeed(w);
+  var w=WordToSeed("gruau"); // remplacer par tout autre mot de 30 caractères ou moins
+  var s=new RandomSeed(w);
   const a = new Uint16Array(1);
 
   // les fonctions témoin et les différentes fonctions à tester
@@ -29,6 +29,25 @@
   }
   const rseedRoll3 = function () {
     return s.roll3 ()-1;
+  }
+
+  const multiWordsTest = function (genWordsNumber, rollsNumber) {
+     let wordsToTest = ['a','0','22','ababababababababababababababababababababababab'];
+     let word, wlength, charno;
+     for (let i=0; i<genWordsNumber;++i) {
+        word="";
+        wlength=3+ Math.floor (Math.random()*26);
+        for (let j=0; j<wlength;++j) {
+          word+=String.fromCharCode(33+Math.floor(Math.random()*117));
+        }
+        wordsToTest.push(word);
+     }
+    for (let i=0;i<wordsToTest.length;++i) {
+     console.log ('***** Test du mot "'+wordsToTest[i]+'" ****** ');
+     w= WordToSeed(wordsToTest[i]);
+     s=new RandomSeed (w);
+     testGeneratedNumbers(rollsNumber)
+    }
   }
 
 
@@ -143,8 +162,9 @@
 
       //test4 : Répartitions chiffres
       for (let i=0;i<10;++i) {
-        console.log ("Nombre de tirages contenant au moins un "+i+" = "+numIncluded[i]);
-        console.log ("Dont "+numFirst[i]+" en première position.");
+        // décommenter si détail souhaité
+        // console.log ("Nombre de tirages contenant au moins un "+i+" = "+numIncluded[i]);
+        // console.log ("Dont "+numFirst[i]+" en première position.");
       }
       //test 5 : série de même centaine
         console.log ("Un nombre de "+maxSameCent+" tirages à la suite ont commencé par "+mostFirst+".");
@@ -162,22 +182,12 @@
         roll1000();
       }
     }
-
-    // ** résultats pour 1,000,000 de tirages **
-    // normalRoll 0.135 seconds
-    // cryptoRoll 2.7 seconds
-    // roll0 0.267 seconds
-    // roll1 0.31 seconds
-    // roll2 1.4 seconds
-    // roll3 1.7 seconds
-    // des artisanales,  roll1 est la solution la plus satisfaisante pour une combinaison vitesse / relativement faible nombre de répétitions
-    // roll2 sacrifie pas mal de vitesse pour réduire d'avantage les anomalies mais demeure nettement plus rapide que la solution crypto
-    // la solution crypto prend un temps exponentiellement plus long si on augmente le nombre de tirages (par exemple 24 secondes pour 10 millions)
-    // quand normalroll est à peine affecté (0.2s) et roll1 entre les deux (2,1 secondes)
     
-    // lancement du test de répartition avec le paramètre 100000
-    // j'utilise l'extension Runcode pour l'activer d'un clic droit dans vscode
-    testGeneratedNumbers(100000)
+    // lancement du test individuel (renseigner un mot dans w et exécuter en console)
+    //testGeneratedNumbers(100000)
+
+    //lancement d'un test à plusieurs mots (5 = nombre de mots aléatoires à générer en plus de ceux par défaut, 2ème param nombre de tirages)    
+    multiWordsTest(5,100000);
     
 
     // lancement du test de vitesse avec 1000000 (à effectuer séparément)

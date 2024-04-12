@@ -29,7 +29,7 @@ how to use :
  - it's also possible to create the Randomseed with no paramater in which case it will generate a random seedtable itself 
  - then use the .roll2, .roll3 or rollLarge methods (optionnal parameters : dice, roll number) to generate numbers in the 1 to dice* range (by default will generate numbers from 1 to 1000)
  - given the same seed, dice and roll number the method will always give the same result
- - if no roll number is given as parameter to the roll2 method, it uses the rollNumber attribute of the RandomSeed object, and increments it
+ - if no roll number is given as parameter to a roll method, it uses the rollNumber attribute of the RandomSeed object, and increments it
 
  (* note that the .roll3 method was not made for dice values > to 1000, if a superior value is given it will just multiply its result to have the same maximum, so some numbers would never appear, only .rollLarge allows dice values up to a billion)
 

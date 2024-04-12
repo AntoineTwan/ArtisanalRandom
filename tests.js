@@ -30,6 +30,9 @@
   const rseedRoll3 = function () {
     return s.roll3 ()-1;
   }
+  const rseedLarge = function () {
+    return s.rollLarge()-1;
+  }
 
   const multiWordsTest = function (genWordsNumber, rollsNumber) {
      let wordsToTest = ['a','0','22','ababababababababababababababababababababababab'];
@@ -38,7 +41,7 @@
         word="";
         wlength=3+ Math.floor (Math.random()*26);
         for (let j=0; j<wlength;++j) {
-          word+=String.fromCharCode(33+Math.floor(Math.random()*117));
+          word+=String.fromCharCode(33+Math.floor(Math.random()*97));
         }
         wordsToTest.push(word);
      }
@@ -54,7 +57,7 @@
   //la fonction qui effectuera les tests de répartition des tirages
   //elle prend en paramètre le nombre de tirages à effectuer (rollsNumber)
   const testGeneratedNumbers = function (rollsNumber) {
-    const roll1000=rseedRoll3;   // la fonction testée est renseignée là
+    const roll1000=rseedLarge;   // la fonction testée est renseignée là
     let rolls = [];
     let repeats = new Array (1000).fill(0);
     let testRoll, mostFirst;
@@ -168,6 +171,7 @@
       }
       //test 5 : série de même centaine
         console.log ("Un nombre de "+maxSameCent+" tirages à la suite ont commencé par "+mostFirst+".");
+        console.log (rolls);
     }
 
     // test séparé de la vitesse pure d'exécution
@@ -177,7 +181,7 @@
     // pour cryptoroll w et s ; pour les autres a (ça fait en fait très peu de différence par rapport au tirage de 100000 nombres)
     
     const testSpeed = function (rollsNumber) {
-      const roll1000=rseedRoll3; 
+      const roll1000=rseedLarge; 
       for (let i=0;i<rollsNumber;++i) {
         roll1000();
       }
@@ -187,7 +191,7 @@
     //testGeneratedNumbers(100000)
 
     //lancement d'un test à plusieurs mots (5 = nombre de mots aléatoires à générer en plus de ceux par défaut, 2ème param nombre de tirages)    
-    multiWordsTest(5,100000);
+    multiWordsTest(2,100000);
     
 
     // lancement du test de vitesse avec 1000000 (à effectuer séparément)

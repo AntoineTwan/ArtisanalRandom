@@ -6,9 +6,10 @@
   function rebaseNumber(number, limit) {
     if (!limit)  limit=30 ;
     number=Math.round (number);
+    if (number<0) {number*-1;}
     if (number>-1 && number<limit) return number;
     if (number >-1) return number-(Math.floor(number/limit)*limit);
-    return rebaseNumber(number*-1); // juste au cas où on décide d'utiliser des formules pouvant aboutir à des valeurs négatives
+ // juste au cas où on décide d'utiliser des formules pouvant aboutir à des valeurs négatives
   }
 
 // génère aléatoirement une seed
@@ -303,7 +304,52 @@
     return result+1;
  }
       
-    
+ RandomSeed.prototype.rollLarge = function (dice, rollNo) {
+  if (dice==undefined) {
+    dice=1000;
+  }
+  if (rollNo==undefined) {
+    rollNo=this.rollNo; 
+    ++ this.rollNo ; 
+    }
+  else {
+      rollNo = parseInt (rollNo);
+}	
+  let mult = [3.114115, 241, 827, 111, 103, 197, 829, 13, 199, 493, 4.1067];
+  let divBase = [0.137, 600, 1850, 127, 114, 434, 1110, 14, 750, 0.5492];
+  let divRange = [1+this.seed[0], 11+this.seed[1]+this.seed[2], 50+this.seed[3]+this.seed[4]+this.seed[5], 20+this.seed[6], 15+this.seed[6], 70+this.seed[1], 4+ this.seed[7]+this.seed[8], 17+this.seed[2], 12+this.seed[13], 2+this.seed[14]];
+  let dicesToRoll = Math.min (dice.toString().length, 10);
+  let dices=[];
+  let v, strv, div; 
+  for (let i=0;i<dicesToRoll;++i) {
+    div= divBase[i]+rebaseNumber(rollNo,divRange[i]);
+    v= mult[i]*rollNo/div;
+    strv = "131"+v.toString().slice(-5,-1).replace('.','');
+    v=parseInt(strv);
+    dices.push (this.seed[rebaseNumber(v)]);
+  }
+  let firstDice=rebaseNumber(rollNo,dicesToRoll);
+  let resultString="";
+  for (let i=0;i<dicesToRoll;++i) {
+    resultString+=dices[rebaseNumber(firstDice+i,dicesToRoll)];
+  }
+
+  let result=parseInt(resultString);
+  if (isNaN(result)) {
+    console.log ("dices "+dices);
+    console.log ("firstDice "+firstDice);
+    console.log ("divBase "+divBase);
+    console.log ("divRange "+divRange);
+    console.log ("dices to roll "+dicesToRoll);
+    console.log ("v "+v);
+    throw error;
+  }
+  result=rebaseNumber (result,dice); 
+  if (rollNo%4) {
+    return dice-result;
+  }
+  return result+1;
+ }   
 
   // la fonction générant la seedtable à partir d'un mot (qui peut être toute autre combinaison de caractères ASCII)
   // elle est exportée pour pouvoir changer le mot dans les texts

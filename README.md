@@ -2,9 +2,9 @@ ArtisanalRandom is a seed based (not really) "random" number generator (PRNG) in
 
 My goal here was to developp an artisanal one, not using hashes nor any other already made crypto function, but as close as I can of those doing so when it comes to generating a large number of unpredictible by human mind numbers from a seed with as little sequence repetitions possible. 
 
-This project used test driven developpment, I've used a test making 100000 rolls of a 1000 sided dice and analyzing results repartition, to be able to compare my method with standard Math.random() results, and slowly improved it to reduce the number of repetitions it was producing (which was insane at start).
+This project used performance test driven developpment, I've used a test making 100,000 rolls of a 1000 sided dice and analyzing results repartition, to be able to compare my method with standard Math.random() results, and slowly improved it to reduce the number of repetitions it was producing (which was insane at start).
 
-Finally after several attempts I ended with a version giving an as low number of repetitions as the default random function for 100,000 rolls (if likely a bit worse for millions).
+Finally after several attempts I ended with a version giving an as low number of repetitions as the default random function for 100,000 rolls (if likely worse for millions).
 
 That best methods are the roll2, roll3 and rollLarge ones (roll0 has just been kept as example of a non efficient one, as I'm going to use this mini project for a blog post on test driven developpment, roll1 is decent for its speed but produce more repetitions of series than math.Random(), roll2 is as efficient up to 200,000 rolls, roll3 is more efficient for avoiding repetitions up to 500,000+ rolls but not really needed if you don't plan to make that many, rollLarge allows rolling dices with up to 1,000,000,000 sides with similar efficiency as roll3, but is not needed for dices smaller than a d1000).
 

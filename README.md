@@ -27,11 +27,11 @@ how to use :
  - import RandomSeed and WordToSeed from randomseed.js (or copy them with only the needed methods into your code)
  - if you want to use a word as seed, call WordToSeed giving it an up to 30 letters seed word as parameter and create a new RandomSeed with the return of WordToSeed as parameter (store it in a global variable to continue using the same seed)
  - it's also possible to create the Randomseed with no paramater in which case it will generate a random seedtable itself 
- - then use the .roll2, .roll3 or rollLarge methods (optionnal parameters : dice, roll number) to generate numbers in the 1 to dice* range (by default will generate numbers from 1 to 1000)
+ - then use the .roll2, .roll3 or rollLarge methods of the RandomSeed (optionnal parameters : dice, roll number) to generate numbers in the 1 to dice* range (by default will generate numbers from 1 to 1000)
  - given the same seed, dice and roll number the method will always give the same result
  - if no roll number is given as parameter to a roll method, it uses the rollNumber attribute of the RandomSeed object, and increments it
 
- (* note that the .roll3 method was not made for dice values > to 1000, if a superior value is given it will just multiply its result to have the same maximum, so some numbers would never appear, only .rollLarge allows dice values up to a billion)
+ (* note that the .roll2 and .roll3 method were not made for dice values > to 1000, if a superior value is given they would just multiply their result to have the same maximum, so some numbers would never appear,  .rollLarge only allows dice values up to a billion)
 
  (ps : package.json and jsconfig are only needed to test the code with vsCode RunCode extension or in node environnment)
 

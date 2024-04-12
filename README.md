@@ -31,9 +31,9 @@ how to use :
  - given the same seed, dice and roll number the method will always give the same result
  - if no roll number is given as parameter to the roll2 method, it uses the rollNumber attribute of the RandomSeed object, and increments it
 
- (* note that the method as implemented was not made for dice values > to 1000, if a superior value is given it will just multiply its result to have the same maximum, so some numbers would never appear, but same approach can be easily adapted to generate far larger numbers, or it can be done by combining several rolls)
+ (* note that the .roll3 method was not made for dice values > to 1000, if a superior value is given it will just multiply its result to have the same maximum, so some numbers would never appear, only .rollLarge allows dice values up to a billion)
 
- (ps : package.json is only needed to test the code with vsCode RunCode extension or in node environnment)
+ (ps : package.json and jsconfig are only needed to test the code with vsCode RunCode extension or in node environnment)
 
 --
 
